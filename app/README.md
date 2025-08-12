@@ -7,7 +7,7 @@ source .venv/bin/activate
 
 # 라이브러리들 설치 명령어
 pip install -r requirements.txt
-
+```
 ## 실행
 1. 백엔드 가상환경 실행
 2. 백엔드 실행 `uvicorn app.main:app --reload`
