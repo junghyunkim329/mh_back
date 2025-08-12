@@ -1,0 +1,22 @@
+# Python 가상환경
+.venv/
+
+# Python 캐시 파일
+__pycache__/
+*.pyc
+
+# 환경 변수 파일
+.env
+
+# VSCode 설정
+.vscode/
+
+# OS별 임시 파일
+*.log
+*.DS_Store
+Thumbs.db
+
+# React (추후에 프론트엔드 추가 시)
+node_modules/
+build/
+dist/
