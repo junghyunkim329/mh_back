@@ -19,7 +19,22 @@ def get_playing_data():
         db = get_db()
         cursor = db.cursor(dictionary=True)
         cursor.execute(
-            "SELECT storeId, searchId, wide_area, basic_area, keyword, name, category, rating, review_cnt, address, url, main_photo FROM store_playing"
+            """
+            SELECT 
+                storeid AS storeId,
+                searchid AS searchId,
+                wide_area,
+                basic_area,
+                keyword,
+                storename AS name,
+                category,
+                rating,
+                review_cnt,
+                address,
+                url,
+                img_url AS main_photo
+            FROM store_playing
+            """
         )
         results = cursor.fetchall()
         cursor.close()
@@ -27,16 +42,27 @@ def get_playing_data():
         return {"data": results}
     except Exception as e:
         return {"error": str(e)}
+    
 
 # 혼놀 리뷰 데이터
-@router.get("/api/playing/{storeId}/review")
-def get_eating_review(storeId: str):
+@router.get("/api/playing/{storeid}/review")
+def get_eating_review(storeid: str):
     try:
         db = get_db()
         cursor = db.cursor(dictionary=True)
         cursor.execute(
-            "SELECT reviewId, storeId, searchId, reviewIdx, reviewTxt FROM review_playing WHERE storeId=%s ORDER BY reviewId",
-            (storeId,)
+            """
+            SELECT 
+                reviewid AS reviewId,
+                storeid AS storeId,
+                searchid AS searchId,
+                reviewidx AS reviewIdx,
+                reviewtxt AS reviewTxt
+            FROM review_playing
+            WHERE storeid=%s
+            ORDER BY reviewid
+            """,
+            (storeid,)
         )
         reviews = cursor.fetchall()
         cursor.close()

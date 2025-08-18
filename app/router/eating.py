@@ -19,8 +19,24 @@ def get_eating_data():
         db = get_db()
         cursor = db.cursor(dictionary=True)
         cursor.execute(
-            "SELECT storeId, searchId, wide_area, basic_area, keyword, name, category, rating, review_cnt, address, url, main_photo FROM store_eating"
+            """
+            SELECT 
+                storeid AS storeId,
+                searchid AS searchId,
+                wide_area,
+                basic_area,
+                keyword,
+                storename AS name,
+                category,
+                rating,
+                review_cnt,
+                address,
+                url,
+                img_url AS main_photo
+            FROM store_eating
+            """
         )
+
         results = cursor.fetchall()
         cursor.close()
         db.close()
@@ -29,14 +45,24 @@ def get_eating_data():
         return {"error": str(e)}
 
 # 혼밥 리뷰 데이터
-@router.get("/api/eating/{storeId}/review")
-def get_eating_review(storeId: str):
+@router.get("/api/eating/{storeid}/review")
+def get_eating_review(storeid: str):
     try:
         db = get_db()
         cursor = db.cursor(dictionary=True)
         cursor.execute(
-            "SELECT reviewId, storeId, searchId, reviewIdx, reviewTxt FROM review_eating WHERE storeId=%s ORDER BY reviewId",
-            (storeId,)
+            """
+            SELECT 
+                reviewid AS reviewId,
+                storeid AS storeId,
+                searchid AS searchId,
+                reviewidx AS reviewIdx,
+                reviewtxt AS reviewTxt
+            FROM review_eating
+            WHERE storeid=%s
+            ORDER BY reviewid
+            """,
+            (storeid,)
         )
         reviews = cursor.fetchall()
         cursor.close()
