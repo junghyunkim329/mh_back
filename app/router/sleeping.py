@@ -12,7 +12,7 @@ def get_db():
         database=os.getenv("MYSQL_DB")
     )
 
-@router.get("/api/sleeping")
+@router.get("/sleeping")
 def get_sleeping_data():
     try:
         db = get_db()
@@ -43,7 +43,7 @@ def get_sleeping_data():
         return {"error": str(e)}
 
 
-@router.get("/api/sleeping/{storeid}/review")
+@router.get("/sleeping/{storeid}/review")
 def get_sleeping_review(storeid: str):
     try:
         db = get_db()
