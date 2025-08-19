@@ -24,9 +24,9 @@ class LikeRequest(BaseModel):
     category: str
     image: str = None
 
-@router.post("/api/likes")
+@router.post("/likes")
 async def add_like(request: Request, like: LikeRequest):
-    user_id = request.cookies.get("userID")
+    user_id = request.cookies.get("UserID")
     if not user_id:
         raise HTTPException(status_code=401, detail="로그인이 필요합니다.")
 
@@ -42,9 +42,9 @@ async def add_like(request: Request, like: LikeRequest):
     return {"message": "좋아요 저장 성공"}  
 
 # 좋아요 삭제
-@router.delete("/api/likes")
+@router.delete("/likes")
 async def remove_like(request: Request, item_name: str):
-    user_id = request.cookies.get("userID")
+    user_id = request.cookies.get("UserID")
     if not user_id:
         raise HTTPException(status_code=401, detail="로그인이 필요합니다.")
 
@@ -61,7 +61,7 @@ async def remove_like(request: Request, item_name: str):
     return {"message": f"{item_name} 좋아요 삭제 완료"}
 
 # 마이페이지
-@router.get("/api/mypage")
+@router.get("/mypage")
 async def get_mypage(request: Request):
     user_id = request.cookies.get("userID")
     if not user_id:
@@ -90,6 +90,6 @@ async def get_mypage(request: Request):
     return {"UserName": user["UserName"], "likes": likes}
 
 # 로드맵 모음 페이지 (확정 X)
-@router.get("/api/{userID}/roadmap")
-def get_user_roadmap(userID: int):
-    return {"message": f"User {userID} roadmap"}
+@router.get("/{UserID}/roadmap")
+def get_user_roadmap(UserID: int):
+    return {"message": f"User {UserID} roadmap"}

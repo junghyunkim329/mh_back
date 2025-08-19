@@ -13,7 +13,7 @@ def get_db():
     )
 
 # 혼밥 가게 데이터
-@router.get("/api/eating")
+@router.get("/eating")
 def get_eating_data():
     try:
         db = get_db()
@@ -45,7 +45,7 @@ def get_eating_data():
         return {"error": str(e)}
 
 # 혼밥 리뷰 데이터
-@router.get("/api/eating/{storeid}/review")
+@router.get("/eating/{storeid}/review")
 def get_eating_review(storeid: str):
     try:
         db = get_db()
