@@ -31,7 +31,7 @@ class LoginRequest(BaseModel):
     UserPW: str
 
 # 회원가입
-@router.post("/signup")
+@router.post("/api/signup")
 async def signup(user: SignupRequest):
     if not user.UserName or not user.UserID or not user.UserPW:
         raise HTTPException(status_code=400, detail="모든 필드를 입력하세요.")
@@ -56,7 +56,7 @@ async def signup(user: SignupRequest):
     return {"message": "회원가입 성공!"}
 
 # 로그인
-@router.post("/login")
+@router.post("/api/login")
 async def login(user: LoginRequest, response: Response):
     conn = get_db()
     cursor = conn.cursor(dictionary=True)
@@ -71,14 +71,14 @@ async def login(user: LoginRequest, response: Response):
         raise HTTPException(status_code=401, detail="비밀번호가 일치하지 않습니다.")
 
     # 쿠키 발급
-    response.set_cookie(key="UserID", value=user_db["UserID"], httponly=True, samesite="lax")
+    response.set_cookie(key="userID", value=user_db["UserID"], httponly=True, samesite="lax")
     return {
         "message": "로그인 성공!",
         "UserName": user_db["UserName"]
     }
 
 # 로그아웃
-@router.post("/logout")
+@router.post("/api/logout")
 async def logout(response: Response):
-    response.delete_cookie("UserID")
+    response.delete_cookie("userID")
     return {"message": "로그아웃 되었습니다."}

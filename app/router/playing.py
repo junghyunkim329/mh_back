@@ -13,7 +13,7 @@ def get_db():
     )
 
 # 혼놀 가게 데이터
-@router.get("/playing")
+@router.get("/api/playing")
 def get_playing_data():
     try:
         db = get_db()
@@ -45,7 +45,7 @@ def get_playing_data():
     
 
 # 혼놀 리뷰 데이터
-@router.get("/playing/{storeid}/review")
+@router.get("/api/playing/{storeid}/review")
 def get_eating_review(storeid: str):
     try:
         db = get_db()
