@@ -73,6 +73,11 @@ async def remove_like(request: Request, item_name: str):
     return {"message": f"{item_name} 좋아요 삭제 완료"}
 
 # --------------------- 마이페이지 ---------------------
+@router.get("/session")
+async def session(request: Request):
+    uid = request.cookies.get("UserID")
+    return {"authenticated": bool(uid)}
+
 @router.get("/mypage")
 async def get_mypage(request: Request):
     user_id = request.cookies.get("UserID")
